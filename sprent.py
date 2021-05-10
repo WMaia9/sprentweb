@@ -82,7 +82,6 @@ def distance(df):
     return df
 
 df = distance(df)
-@st.cache
 def rename(df):
 
     df = df.rename(columns={'Type': 'Type_house', 'dist_bus.csv': 'dist_bus', 'dist_subway.csv': 'dist_subway',
