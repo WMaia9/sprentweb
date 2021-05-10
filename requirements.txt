@@ -10,8 +10,10 @@ sklearn
 seaborn
 streamlit==0.80.0
 opencv-python-headless
-joblib==1.0.1
+joblib==0.13.2
 geopy
-
+mlxtend==0.18.0
+altair==4.1.0
+numba==0.48.0
 
 
