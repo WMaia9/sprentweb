@@ -5,6 +5,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import geofast
+from geopy.geocoders import Bing
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 
@@ -20,7 +21,7 @@ st.sidebar.header('User Input Features')
 address = st.sidebar.text_input("Address", 'Av. Paulista')
 address = address + ' São Paulo'
 model = st.sidebar.selectbox('Type', list(['House', 'Apartament']))
-floor_area = st.sidebar.slider("Total Area (m²)", 15,500,93) # floor area
+floor_area = st.sidebar.slider("Total Area (m²)", 15,500,80) # floor area
 bedrooms = st.sidebar.slider("Bedrooms", 0,10,1)
 bathrooms = st.sidebar.slider("Bathrooms", 0,10,1)
 vacancies = st.sidebar.slider("Vacancies", 0,10,1)
@@ -36,8 +37,8 @@ air = st.sidebar.selectbox('air conditioning', list(['No', 'Yes']))
 office = st.sidebar.selectbox('office', list(['No', 'Yes']))
 
 ## CREATE LOCATION
-geolocator = Nominatim(user_agent="br")
-geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
+geolocator = Bing(api_key="AjTXqeqA-_HoBIIZVhCHWAf9Z1-OVtMK-_wMzsk6ai8jyEpw1GS39hqJvCFKpHfG")
+#geocode = RateLimiter(geolocator.geocode, timeout=10)
 location = geolocator.geocode(address)
 lat = location.latitude
 lon = location.longitude
