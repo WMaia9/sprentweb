@@ -1,16 +1,11 @@
-scikit-learn
 lightgbm
 xgboost
 numpy
-ipython
-scipy
 pandas
-matplotlib
 sklearn
-seaborn
-streamlit==0.80.0
+streamlit
 opencv-python-headless
-joblib==0.13.2
+joblib
 geopy
 
 
