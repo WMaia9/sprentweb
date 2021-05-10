@@ -39,6 +39,14 @@ townhouse = st.sidebar.selectbox('townhouse', list(['No', 'Yes']))
 air = st.sidebar.selectbox('air conditioning', list(['No', 'Yes']))
 office = st.sidebar.selectbox('office', list(['No', 'Yes']))
 
+## PREDICT
+@st.cache(allow_output_mutation=True)
+def load_model():
+    joblib_file = "blended1.pkl"
+    gbr_reg = joblib.load(joblib_file)
+    predict1 = np.floor(np.expm1(gbr_reg.predict(df.values)))
+    return predict1
+
 ## CREATE LOCATION
 geolocator = Bing(api_key="AjTXqeqA-_HoBIIZVhCHWAf9Z1-OVtMK-_wMzsk6ai8jyEpw1GS39hqJvCFKpHfG")
 #geocode = RateLimiter(geolocator.geocode, timeout=10)
@@ -99,8 +107,5 @@ def rename(df):
 df = rename(df)
 df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartament': 0})
 
-## PREDICT
-joblib_file = "blended1.pkl"
-gbr_reg = joblib.load(joblib_file)
-predict1 = np.floor(np.expm1(gbr_reg.predict(df.values)))
-st.header('Predicted Rent Price is **R$%s**' % ("{:,}".format(int(predict1))))
+# Model
+st.header('Predicted Rent Price is **R$%s**' % ("{:,}".format(int(load_model()))))
