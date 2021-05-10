@@ -5,6 +5,6 @@ streamlit
 joblib
 geopy
 xgboost
-
+mlxtend
 
 
