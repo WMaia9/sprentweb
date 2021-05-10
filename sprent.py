@@ -20,25 +20,19 @@ st.sidebar.header('User Input Features')
 address = st.sidebar.text_input("Address", 'Av. Paulista')
 address = address + ' São Paulo'
 model = st.sidebar.selectbox('Type', list(['House', 'Apartament']))
-floor_area = st.sidebar.slider("Total Area (m²)", 15,600,93) # floor area
-bedrooms = st.sidebar.slider("Bedrooms", 0,12,1)
+floor_area = st.sidebar.slider("Total Area (m²)", 15,500,93) # floor area
+bedrooms = st.sidebar.slider("Bedrooms", 0,10,1)
 bathrooms = st.sidebar.slider("Bathrooms", 0,10,1)
 vacancies = st.sidebar.slider("Vacancies", 0,10,1)
-living_room = st.sidebar.selectbox('living room', list(['No', 'Yes']))
 suite = st.sidebar.selectbox('suite', list(['No', 'Yes']))
 furnished = st.sidebar.selectbox('furnished', list(['No', 'Yes']))
-swimming_pool = st.sidebar.selectbox('swimming pool', list(['No', 'Yes']))
 barbecue = st.sidebar.selectbox('barbecue', list(['No', 'Yes']))
 lounge = st.sidebar.selectbox('lounge', list(['No', 'Yes']))
 balcony = st.sidebar.selectbox('balcony', list(['No', 'Yes']))
-gym = st.sidebar.selectbox('gym', list(['No', 'Yes']))
 duplex = st.sidebar.selectbox('duplex', list(['No', 'Yes']))
-yard = st.sidebar.selectbox('yard', list(['No', 'Yes']))
-closet = st.sidebar.selectbox('closet', list(['No', 'Yes']))
 renovated = st.sidebar.selectbox('renovated', list(['No', 'Yes']))
 townhouse = st.sidebar.selectbox('townhouse', list(['No', 'Yes']))
 air = st.sidebar.selectbox('air conditioning', list(['No', 'Yes']))
-condominium = st.sidebar.selectbox('condominium', list(['No', 'Yes']))
 office = st.sidebar.selectbox('office', list(['No', 'Yes']))
 
 ## CREATE LOCATION
@@ -52,14 +46,13 @@ map_data = pd.DataFrame({'lat': [lat], 'lon': [lon]})
 st.map(map_data)
 
 head = [{'Type':model, 'Total Area':floor_area, 'Bathrooms':bedrooms,'Bedrooms':bathrooms, 'Vacancies':vacancies,
-        'sala':living_room, 'suíte':suite,'mobiliado':furnished, 'piscina':swimming_pool, 'churrasqueira':barbecue,
-        'salão':lounge, 'varanda':balcony, 'academia':gym,'duplex':duplex, 'quintal':yard, 'armário':closet,
-        'reformado':renovated, 'sobrado':townhouse, 'condicionado':air,'condominio':condominium, 'escritorio':office,
-       'latitude':lat, 'longitude':lon}]
+         'suíte':suite,'mobiliado':furnished, 'churrasqueira':barbecue,'salão':lounge, 'varanda':balcony,
+         'duplex':duplex, 'reformado':renovated, 'sobrado':townhouse, 'condicionado':air,
+         'escritorio':office, 'latitude':lat, 'longitude':lon}]
 
 df = pd.DataFrame(head)
 
-for i in range(5, 21):
+for i in range(5, 15):
     df.iloc[:,i] = df.iloc[:,i].map({'Yes':1 ,'No':0})
 
 # Funções de distância
@@ -94,19 +87,16 @@ def rename(df):
                             'dist_school.csv': 'dist_school', 'culture.csv': 'ncult',
                             'crime.csv': 'crime%', 'restaurant.csv': 'food'})
 
-    df = df[['Total Area', 'Bathrooms',
-             'Bedrooms', 'Vacancies', 'dist_subway', 'dist_bus', 'dist_school',
-             'ncult', 'food', 'crime%', 'latitude', 'longitude', 'sala', 'suíte',
-             'mobiliado', 'piscina', 'churrasqueira', 'salão', 'varanda', 'academia',
-             'duplex', 'quintal', 'armário', 'reformado', 'sobrado', 'condicionado',
-             'condominio', 'escritorio','Type_house']]
+    df = df[['Total Area', 'Bathrooms', 'Bedrooms', 'Vacancies', 'dist_subway', 'dist_bus', 'dist_school',
+             'ncult', 'food', 'crime%', 'latitude', 'longitude', 'suíte', 'mobiliado', 'churrasqueira', 'salão',
+             'varanda','duplex', 'reformado', 'sobrado', 'condicionado', 'escritorio','Type_house']]
     return df
 
 df = rename(df)
-df['Type_house'] = df['Type_house'].map({'House':1 ,'Apartament':0})
+df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartament': 0})
 
 ## PREDICT
-joblib_file = "predict_model.pkl"
+joblib_file = "blended1.pkl"
 gbr_reg = joblib.load(joblib_file)
 predict1 = np.floor(np.expm1(gbr_reg.predict(df.values)))
 st.header('Predicted Rent Price is **R$%s**' % ("{:,}".format(int(predict1))))
