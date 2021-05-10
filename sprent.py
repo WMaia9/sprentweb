@@ -96,7 +96,7 @@ df = rename(df)
 df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartament': 0})
 
 ## PREDICT
-joblib_file = "predict_model.pkl"
+joblib_file = "blended1.pkl"
 gbr_reg = joblib.load(joblib_file)
 predict1 = np.floor(np.expm1(gbr_reg.predict(df.values)))
 st.header('Predicted Rent Price is **R$%s**' % ("{:,}".format(int(predict1))))
