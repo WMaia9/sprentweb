@@ -9,12 +9,15 @@ from geopy.geocoders import Bing
 #from geopy.geocoders import Nominatim
 #from geopy.extra.rate_limiter import RateLimiter
 
-st.title('Interactive App to Visualize and Predict São Paulo Rent Prices')
+st.title('São Paulo Rent Prices')
+
+
+from PIL import Image
+img = Image.open('housesbanner.png')
+st.image(img)
 
 st.text(" ")
 st.text(" ")
-st.text(" ")
-
 
 ## CREATE USER INPUT SIDBAR
 st.sidebar.header('User Input Features')
