@@ -12,6 +12,5 @@ streamlit==0.80.0
 opencv-python-headless
 joblib==0.13.2
 geopy
-mlxtend
 
 
