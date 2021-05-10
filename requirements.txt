@@ -1,4 +1,9 @@
+scikit-learn
+lightgbm
+xgboost
 numpy
+ipython
+scipy
 pandas
 matplotlib
 sklearn
