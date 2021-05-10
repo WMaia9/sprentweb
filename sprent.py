@@ -38,7 +38,7 @@ head = [{'latitude': lat, 'longitude': lon}]
 df = pd.DataFrame(head)
 
 # Model
-@st.cache(allow_output_mutation=True)
+#@st.cache(allow_output_mutation=True)
 def load_model():
     joblib_file = "blended1.pkl"
     gbr_reg = joblib.load(joblib_file)
