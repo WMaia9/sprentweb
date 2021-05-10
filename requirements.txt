@@ -2,8 +2,9 @@ numpy
 pandas
 sklearn
 streamlit
-opencv-python-headless
 joblib
 geopy
+xgboost
+
 
 
