@@ -6,8 +6,8 @@ import pandas as pd
 import numpy as np
 import geofast
 from geopy.geocoders import Bing
-from geopy.geocoders import Nominatim
-from geopy.extra.rate_limiter import RateLimiter
+#from geopy.geocoders import Nominatim
+#from geopy.extra.rate_limiter import RateLimiter
 
 st.title('Interactive App to Visualize and Predict São Paulo Rent Prices')
 
@@ -20,11 +20,11 @@ st.text(" ")
 st.sidebar.header('User Input Features')
 address = st.sidebar.text_input("Address", 'Av. Paulista')
 address = address + ' São Paulo'
-model = st.sidebar.selectbox('Type', list(['House', 'Apartament']))
-floor_area = st.sidebar.slider("Total Area (m²)", 15,500,80) # floor area
-bedrooms = st.sidebar.slider("Bedrooms", 0,10,1)
-bathrooms = st.sidebar.slider("Bathrooms", 0,10,1)
-vacancies = st.sidebar.slider("Vacancies", 0,10,1)
+model = st.sidebar.selectbox('Type', list(['Apartament', 'House']))
+floor_area = st.sidebar.slider("Total Area (m²)", 15, 500, 80)
+bedrooms = st.sidebar.slider("Bedrooms", 0, 10, 1)
+bathrooms = st.sidebar.slider("Bathrooms", 0, 10, 1)
+vacancies = st.sidebar.slider("Vacancies", 0, 10, 1)
 suite = st.sidebar.selectbox('suite', list(['No', 'Yes']))
 furnished = st.sidebar.selectbox('furnished', list(['No', 'Yes']))
 barbecue = st.sidebar.selectbox('barbecue', list(['No', 'Yes']))
@@ -46,17 +46,18 @@ lon = location.longitude
 map_data = pd.DataFrame({'lat': [lat], 'lon': [lon]})
 st.map(map_data)
 
-head = [{'Type':model, 'Total Area':floor_area, 'Bathrooms':bedrooms,'Bedrooms':bathrooms, 'Vacancies':vacancies,
-         'suíte':suite,'mobiliado':furnished, 'churrasqueira':barbecue,'salão':lounge, 'varanda':balcony,
-         'duplex':duplex, 'reformado':renovated, 'sobrado':townhouse, 'condicionado':air,
-         'escritorio':office, 'latitude':lat, 'longitude':lon}]
+head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
+         'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
+         'salão': lounge, 'varanda': balcony, 'duplex': duplex, 'reformado': renovated, 'sobrado': townhouse,
+         'condicionado': air, 'escritorio': office, 'latitude': lat, 'longitude': lon}]
 
 df = pd.DataFrame(head)
 
 for i in range(5, 15):
-    df.iloc[:,i] = df.iloc[:,i].map({'Yes':1 ,'No':0})
+    df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
 
 # Funções de distância
+@st.cache
 def distance(df):
     #Calcula a distância mais próxima
     data = ['dist_subway.csv', 'dist_bus.csv', 'dist_school.csv']
@@ -81,16 +82,16 @@ def distance(df):
     return df
 
 df = distance(df)
-
+@st.cache
 def rename(df):
 
-    df = df.rename(columns={'Type':'Type_house','dist_bus.csv': 'dist_bus', 'dist_subway.csv': 'dist_subway',
+    df = df.rename(columns={'Type': 'Type_house', 'dist_bus.csv': 'dist_bus', 'dist_subway.csv': 'dist_subway',
                             'dist_school.csv': 'dist_school', 'culture.csv': 'ncult',
                             'crime.csv': 'crime%', 'restaurant.csv': 'food'})
 
     df = df[['Total Area', 'Bathrooms', 'Bedrooms', 'Vacancies', 'dist_subway', 'dist_bus', 'dist_school',
              'ncult', 'food', 'crime%', 'latitude', 'longitude', 'suíte', 'mobiliado', 'churrasqueira', 'salão',
-             'varanda','duplex', 'reformado', 'sobrado', 'condicionado', 'escritorio','Type_house']]
+             'varanda', 'duplex', 'reformado', 'sobrado', 'condicionado', 'escritorio', 'Type_house']]
     return df
 
 df = rename(df)
