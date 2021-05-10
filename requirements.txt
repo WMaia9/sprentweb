@@ -5,5 +5,4 @@ streamlit
 joblib
 geopy
 mlxtend==0.18.0
-StackingCVRegressor
 
