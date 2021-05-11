@@ -78,15 +78,15 @@ bedrooms = st.sidebar.slider("Bedrooms", 0, 10, 1)
 bathrooms = st.sidebar.slider("Bathrooms", 0, 10, 1)
 vacancies = st.sidebar.slider("Vacancies", 0, 10, 1)
 suite = st.sidebar.selectbox('suite', list(['No', 'Yes']))
+duplex = st.sidebar.selectbox('duplex', list(['No', 'Yes']))
+office = st.sidebar.selectbox('office', list(['No', 'Yes']))
 furnished = st.sidebar.selectbox('furnished', list(['No', 'Yes']))
-barbecue = st.sidebar.selectbox('barbecue', list(['No', 'Yes']))
 lounge = st.sidebar.selectbox('lounge', list(['No', 'Yes']))
 balcony = st.sidebar.selectbox('balcony', list(['No', 'Yes']))
-duplex = st.sidebar.selectbox('duplex', list(['No', 'Yes']))
 renovated = st.sidebar.selectbox('renovated', list(['No', 'Yes']))
 townhouse = st.sidebar.selectbox('townhouse', list(['No', 'Yes']))
 air = st.sidebar.selectbox('air conditioning', list(['No', 'Yes']))
-office = st.sidebar.selectbox('office', list(['No', 'Yes']))
+barbecue = st.sidebar.selectbox('barbecue grill', list(['No', 'Yes']))
 
 head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
          'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
