@@ -86,7 +86,7 @@ renovated = st.sidebar.selectbox('renovated', list(['No', 'Yes']))
 townhouse = st.sidebar.selectbox('townhouse', list(['No', 'Yes']))
 air = st.sidebar.selectbox('air conditioning', list(['No', 'Yes']))
 barbecue = st.sidebar.selectbox('barbecue grill', list(['No', 'Yes']))
-btn_predict = st.sidebar.button("REALIZAR PREDIÇÃO")
+btn_predict = st.sidebar.button("MAKE PREDICTION")
 
 if btn_predict:
 
