@@ -86,30 +86,33 @@ renovated = st.sidebar.selectbox('renovated', list(['No', 'Yes']))
 townhouse = st.sidebar.selectbox('townhouse', list(['No', 'Yes']))
 air = st.sidebar.selectbox('air conditioning', list(['No', 'Yes']))
 barbecue = st.sidebar.selectbox('barbecue grill', list(['No', 'Yes']))
+btn_predict = st.sidebar.button("REALIZAR PREDIÇÃO")
 
-head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
-         'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
-         'salão': lounge, 'varanda': balcony, 'duplex': duplex, 'reformado': renovated, 'sobrado': townhouse,
-         'condicionado': air, 'escritorio': office}]
+if btn_predict:
 
-df2 = pd.DataFrame(head)
-df = pd.concat([df1, df2], axis=1, join="inner")
+    head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
+             'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
+             'salão': lounge, 'varanda': balcony, 'duplex': duplex, 'reformado': renovated, 'sobrado': townhouse,
+             'condicionado': air, 'escritorio': office}]
 
-def rename(df):
+    df2 = pd.DataFrame(head)
+    df = pd.concat([df1, df2], axis=1, join="inner")
 
-    df = df.rename(columns={'Type': 'Type_house', 'dist_bus.csv': 'dist_bus', 'dist_subway.csv': 'dist_subway',
-                            'dist_school.csv': 'dist_school', 'culture.csv': 'ncult',
-                            'crime.csv': 'crime%', 'restaurant.csv': 'food'})
+    def rename(df):
 
-    df = df[['Total Area', 'Bathrooms', 'Bedrooms', 'Vacancies', 'dist_subway', 'dist_bus', 'dist_school',
-             'ncult', 'food', 'crime%', 'latitude', 'longitude', 'suíte', 'mobiliado', 'churrasqueira', 'salão',
-             'varanda', 'duplex', 'reformado', 'sobrado', 'condicionado', 'escritorio', 'Type_house']]
-    return df
-df = rename(df)
-for i in range(12, 22):
-    df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
+        df = df.rename(columns={'Type': 'Type_house', 'dist_bus.csv': 'dist_bus', 'dist_subway.csv': 'dist_subway',
+                                'dist_school.csv': 'dist_school', 'culture.csv': 'ncult',
+                                'crime.csv': 'crime%', 'restaurant.csv': 'food'})
 
-df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartament': 0})
+        df = df[['Total Area', 'Bathrooms', 'Bedrooms', 'Vacancies', 'dist_subway', 'dist_bus', 'dist_school',
+                 'ncult', 'food', 'crime%', 'latitude', 'longitude', 'suíte', 'mobiliado', 'churrasqueira', 'salão',
+                 'varanda', 'duplex', 'reformado', 'sobrado', 'condicionado', 'escritorio', 'Type_house']]
+        return df
+    df = rename(df)
+    for i in range(12, 22):
+        df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
 
-## PREDICT
-st.header('Predicted Rent Price is **R$%s**' % ("{:,}".format(int(load_model()))))
+    df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartament': 0})
+
+    ## PREDICT
+    st.header('Predicted Rent Price is **R$%s**' % ("{:,}".format(int(load_model()))))
