@@ -36,9 +36,11 @@ df = pd.DataFrame(head)
 
 # Modelo
 def load_model():
+
     joblib_file = "blended1.pkl"
     gbr_reg = joblib.load(joblib_file)
     predict1 = np.floor(np.expm1(gbr_reg.predict(df.values)))
+
     return predict1
 
 
@@ -52,10 +54,12 @@ def distance(dataframe):
         dataframe[dados] = np.nan
         for n in rows:
             h = dataframe.loc[n, ["latitude", "longitude"]]
-            dataframe.loc[n, dados] = geofast.distance(h.latitude, h.longitude, stops.latitude, stops.longitude).min()
+            dataframe.loc[n, dados] = geofast.distance(h.latitude, h.longitude,
+                                                       stops.latitude, stops.longitude).min()
 
     # Calcula os pontos em uma localidade de 1km
     data = ['culture.csv', 'crime.csv', 'restaurant.csv']
+
     for dados in data:
         region = pd.read_csv(os.path.join(settings.dir_sp, dados))
         dataframe[dados] = np.nan
@@ -63,6 +67,7 @@ def distance(dataframe):
             h = dataframe.loc[n, ["longitude", "latitude"]]
             h500 = geofast.distance(region.latitude, region.longitude, h.latitude, h.longitude)
             dataframe[dados][n] = sum(h500 < 700)
+
     dataframe['crime.csv'] = dataframe['crime.csv'] * 100 / 12377
     return dataframe
 
@@ -108,10 +113,12 @@ if btn_predict:
                                'dist_school', 'ncult', 'food', 'crime%', 'latitude', 'longitude', 'suíte', 'mobiliado',
                                'churrasqueira', 'salão', 'varanda', 'duplex', 'reformado', 'sobrado', 'condicionado',
                                'escritorio', 'Type_house']]
+
         return dataframe
 
 
     df = rename(df)
+
     for i in range(12, 22):
         df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
 
