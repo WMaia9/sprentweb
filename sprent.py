@@ -23,7 +23,6 @@ address = address + ' São Paulo'
 
 # CREATE LOCATION
 geolocator = Bing(api_key="AjTXqeqA-_HoBIIZVhCHWAf9Z1-OVtMK-_wMzsk6ai8jyEpw1GS39hqJvCFKpHfG")
-# geocode = RateLimiter(geolocator.geocode, timeout=10)
 location = geolocator.geocode(address)
 lat = location.latitude
 lon = location.longitude
@@ -35,7 +34,7 @@ head = [{'latitude': lat, 'longitude': lon}]
 df = pd.DataFrame(head)
 
 
-# Model
+# Modelo
 def load_model():
     joblib_file = "blended1.pkl"
     gbr_reg = joblib.load(joblib_file)
@@ -70,7 +69,7 @@ def distance(dataframe):
 
 df1 = distance(df)
 
-# VARIABLES
+# Variáveis
 model = st.sidebar.selectbox('Type', list(['Apartment', 'House']))
 floor_area = st.sidebar.slider("Total Area (m²)", 15, 500, 80)
 bedrooms = st.sidebar.slider("Bedrooms", 0, 10, 1)
@@ -118,5 +117,5 @@ if btn_predict:
 
     df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartment': 0})
 
-    # PREDICT
-    st.header('Predicted Rent Price it is **R$%s**' % ("{:,}".format(int(load_model()))))
+    # Predict
+    st.header('Predicted Rent Price it is: **R$%s**' % ("{:,}".format(int(load_model()))))
