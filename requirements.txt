@@ -6,5 +6,5 @@ joblib~=1.1.0
 geopy~=2.2.0
 mlxtend==0.18.0
 lightgbm==3.2.1
-xgboost==1.4.0
+xgboost==1.6.1
 Pillow~=8.4.0
