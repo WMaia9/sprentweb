@@ -118,6 +118,7 @@ if btn_predict:
 
 
     df = rename(df)
+    print(df)
 
     for i in range(12, 22):
         df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
