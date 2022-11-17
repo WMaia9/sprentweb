@@ -75,7 +75,7 @@ def distance(dataframe):
 df1 = distance(df)
 
 # Variáveis
-type = st.sidebar.selectbox('Tipo', list(['Apartamento', 'Casa']))
+model = st.sidebar.selectbox('Tipo', list(['Apartamento', 'Casa']))
 floor_area = st.sidebar.number_input("Area Total (m²)", 20, value=60)
 bedrooms = st.sidebar.slider("Quantos", 0, 15, 1)
 bathrooms = st.sidebar.slider("Banheiro", 0, 15, 1)
@@ -94,7 +94,7 @@ btn_predict = st.sidebar.button("MAKE PREDICTION")
 
 if btn_predict:
 
-    head = [{'Type': type, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
+    head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
              'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
              'salão': lounge, 'varanda': balcony, 'duplex': duplex, 'reformado': renovated, 'sobrado': townhouse,
              'condicionado': air, 'escritorio': office}]
