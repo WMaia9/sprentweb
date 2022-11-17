@@ -76,20 +76,20 @@ df1 = distance(df)
 
 # Variáveis
 model = st.sidebar.selectbox('Tipo', list(['Apartment', 'House']))
-floor_area = st.sidebar.number_input("Area Total (m²)", 20, value=60)
-bedrooms = st.sidebar.slider("Quantos", 0, 10, 1)
-bathrooms = st.sidebar.slider("Banheiro", 0, 10, 1)
-vacancies = st.sidebar.slider("Estacionamento", 0, 10, 1)
-suite = st.sidebar.selectbox('Suíte', list(['Não', 'Sim']))
-duplex = st.sidebar.selectbox('Duplex', list(['Não', 'Sim']))
-office = st.sidebar.selectbox('Escritório', list(['Não', 'Sim']))
-furnished = st.sidebar.selectbox('Mobiliado', list(['Não', 'Sim']))
-lounge = st.sidebar.selectbox('Salão de Festas', list(['Não', 'Sim']))
-balcony = st.sidebar.selectbox('Varanda', list(['Não', 'Sim']))
-renovated = st.sidebar.selectbox('Reformado', list(['Não', 'Sim']))
-townhouse = st.sidebar.selectbox('Sobrado', list(['Não', 'Sim']))
-air = st.sidebar.selectbox('Ar Condionado', list(['Não', 'Sim']))
-barbecue = st.sidebar.selectbox('Churrasqueira', list(['Não', 'Sim']))
+floor_area = st.sidebar.slider("Area Total (m²)", 15, 500, 80)
+bedrooms = st.sidebar.slider("Quartos", 0, 10, 1)
+bathrooms = st.sidebar.slider("Banheiros", 0, 10, 1)
+vacancies = st.sidebar.slider("Vagas de Estacionamento", 0, 10, 1)
+suite = st.sidebar.selectbox('Suíte', list(['No', 'Yes']))
+duplex = st.sidebar.selectbox('Duplex', list(['No', 'Yes']))
+office = st.sidebar.selectbox('Escritório', list(['No', 'Yes']))
+furnished = st.sidebar.selectbox('Reformado', list(['No', 'Yes']))
+lounge = st.sidebar.selectbox('Salão de Festas', list(['No', 'Yes']))
+balcony = st.sidebar.selectbox('Varanda', list(['No', 'Yes']))
+renovated = st.sidebar.selectbox('Reformado', list(['No', 'Yes']))
+townhouse = st.sidebar.selectbox('Sobrado', list(['No', 'Yes']))
+air = st.sidebar.selectbox('Ar Condicionado', list(['No', 'Yes']))
+barbecue = st.sidebar.selectbox('Churrasqueira', list(['No', 'Yes']))
 btn_predict = st.sidebar.button("MAKE PREDICTION")
 
 if btn_predict:
@@ -123,7 +123,7 @@ if btn_predict:
     for i in range(12, 22):
         df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
 
-    df['Type_house'] = df['Type_house'].map({'Casa': 1, 'Apartamento': 0})
+    df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartment': 0})
 
     # Predict
-    st.header(f'O valor do aluguel é: **R$%s**' % ("{:,}".format(int(load_model()))))
+    st.header('Predicted Rent Price it is: **R$%s**' % ("{:,}".format(int(load_model()))))
