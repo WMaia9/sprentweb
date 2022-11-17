@@ -17,8 +17,8 @@ st.text(" ")
 st.text(" ")
 
 # CREATE ADDRESS
-st.sidebar.header('User Input Features')
-address = st.sidebar.text_input("Address", 'Av. Paulista')
+st.sidebar.header('Varárives do Imóvel')
+address = st.sidebar.text_input("Endereço", 'Av. Paulista')
 address = address + ' São Paulo'
 
 # CREATE LOCATION
