@@ -75,10 +75,10 @@ def distance(dataframe):
 df1 = distance(df)
 
 # Variáveis
-model = st.sidebar.selectbox('Type', list(['Apartment', 'House']))
-floor_area = st.sidebar.slider("Total Area (m²)", 15, 500, 80)
-bedrooms = st.sidebar.slider("Bedrooms", 0, 10, 1)
-bathrooms = st.sidebar.slider("Bathrooms", 0, 10, 1)
+model = st.sidebar.selectbox('Tipo', list(['Apartment', 'House']))
+floor_area = st.sidebar.slider("Área Total (m²)", 15, 500, 80)
+bedrooms = st.sidebar.slider("Quartos", 0, 10, 1)
+bathrooms = st.sidebar.slider("Banheiros", 0, 10, 1)
 vacancies = st.sidebar.slider("Parking Spaces", 0, 10, 1)
 suite = st.sidebar.selectbox('Suite', list(['No', 'Yes']))
 duplex = st.sidebar.selectbox('Duplex', list(['No', 'Yes']))
@@ -90,7 +90,7 @@ renovated = st.sidebar.selectbox('Renovated', list(['No', 'Yes']))
 townhouse = st.sidebar.selectbox('Two-Story House', list(['No', 'Yes']))
 air = st.sidebar.selectbox('Air Conditioning', list(['No', 'Yes']))
 barbecue = st.sidebar.selectbox('Barbecue grill', list(['No', 'Yes']))
-btn_predict = st.sidebar.button("MAKE PREDICTION")
+btn_predict = st.sidebar.button("CALCULAR ALUGUÉL")
 
 if btn_predict:
 
