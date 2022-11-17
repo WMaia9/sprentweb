@@ -17,7 +17,7 @@ st.text(" ")
 st.text(" ")
 
 # CREATE ADDRESS
-st.sidebar.header('Varárives do Imóvel')
+st.sidebar.header('Características do Imóvel')
 address = st.sidebar.text_input("Endereço", 'Av. Paulista')
 address = address + ' São Paulo'
 
@@ -126,4 +126,4 @@ if btn_predict:
     df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartment': 0})
 
     # Predict
-    st.header('Predicted Rent Price it is: **R$%s**' % ("{:,}".format(int(load_model()))))
+    st.header('O Valor do Aluguel é: **R$%s**' % ("{:,}".format(int(load_model()))))
