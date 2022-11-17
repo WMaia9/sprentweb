@@ -94,7 +94,7 @@ btn_predict = st.sidebar.button("MAKE PREDICTION")
 
 if btn_predict:
 
-    head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
+    head = [{'Type': type, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
              'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
              'salão': lounge, 'varanda': balcony, 'duplex': duplex, 'reformado': renovated, 'sobrado': townhouse,
              'condicionado': air, 'escritorio': office}]
