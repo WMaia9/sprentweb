@@ -123,7 +123,7 @@ if btn_predict:
     for i in range(12, 22):
         df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
 
-    df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartment': 0})
+    df['Type_house'] = df['Type_house'].map({'Casa': 1, 'Apartamento': 0})
 
     # Predict
-    st.header('Predicted Rent Price it is: **R$%s**' % ("{:,}".format(int(load_model()))))
+    st.header(f'O valor do aluguel é: **R$%s**' % ("{:,}".format(int(load_model()))))
