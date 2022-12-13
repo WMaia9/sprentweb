@@ -76,7 +76,7 @@ df1 = distance(df)
 
 # Variáveis
 model = st.sidebar.selectbox('Tipo', list(['Apartamento', 'Casa']))
-floor_area = st.sidebar.slider("Área Total (m²)", 15, 500, 80)
+floor_area = st.sidebar.number_input("Area Total (m²)", 20, value=60)
 bedrooms = st.sidebar.slider("Quartos", 0, 10, 1)
 bathrooms = st.sidebar.slider("Banheiros", 0, 10, 1)
 vacancies = st.sidebar.slider("Estacionamento", 0, 10, 1)
