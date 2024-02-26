@@ -66,7 +66,7 @@ def distance(dataframe):
         for n in rows:
             h = dataframe.loc[n, ["longitude", "latitude"]]
             h500 = geofast.distance(region.latitude, region.longitude, h.latitude, h.longitude)
-            dataframe[dados][n] = sum(h500 < 700)
+            dataframe.loc[n, dados] = sum(h500 < 700)
 
     dataframe['crime.csv'] = dataframe['crime.csv'] * 100 / 12377
     return dataframe
