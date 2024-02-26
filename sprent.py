@@ -64,8 +64,8 @@ def distance(dataframe):
         region = pd.read_csv(os.path.join(settings.dir_sp, dados))
         dataframe[dados] = np.nan
         for n in rows:
-            h = dataframe.loc[n, ["longitude", "latitude"]]
-            h500 = geofast.distance(region.latitude, region.longitude, h.latitude, h.longitude)
+            h = dataframe.loc[:, ["longitude", "latitude"]].to_numpy()  # Convert to NumPy array
+            h500 = geofast.distance(region.latitude.to_numpy(), region.longitude.to_numpy(), h[:, 0], h[:, 1]) 
             dataframe.loc[n, dados] = sum(h500 < 700)
 
     dataframe['crime.csv'] = dataframe['crime.csv'] * 100 / 12377
