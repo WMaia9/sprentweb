@@ -126,4 +126,5 @@ if btn_predict:
     df['Type_house'] = df['Type_house'].map({'Casa': 1, 'Apartamento': 0})
 
     # Predict
-    st.header('O Valor do Aluguel é: **R$%s**' % ("{:,}".format(int(load_model()))))
+    prediction = load_model()[0]
+    st.header('O Valor do Aluguel é: **R$%s**' % ("{:,}".format(int(prediction))))
