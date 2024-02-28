@@ -17,8 +17,8 @@ st.text(" ")
 st.text(" ")
 
 # CREATE ADDRESS
-st.sidebar.header('Características do Imóvel')
-address = st.sidebar.text_input("Endereço", 'Av. Paulista')
+st.sidebar.header('Property Characteristics')
+address = st.sidebar.text_input("Address", 'Av. Paulista')
 address = address + ' São Paulo'
 
 # CREATE LOCATION
@@ -34,7 +34,7 @@ head = [{'latitude': lat, 'longitude': lon}]
 df = pd.DataFrame(head)
 
 
-# Modelo
+# Model
 def load_model():
 
     joblib_file = "blended1.pkl"
@@ -44,29 +44,29 @@ def load_model():
     return predict1
 
 
-# Funções de distância
+# Distance Functions
 def distance(dataframe):
-    # Calcula a distância mais próxima
+    # Calculate closest distance
     data = ['dist_subway.csv', 'dist_bus.csv', 'dist_school.csv']
     rows = dataframe.index
-    for dados in data:
-        stops = pd.read_csv(os.path.join(settings.dir_sp, dados))
-        dataframe[dados] = np.nan
+    for data_file in data:
+        stops = pd.read_csv(os.path.join(settings.dir_sp, data_file))
+        dataframe[data_file] = np.nan
         for n in rows:
             h = dataframe.loc[n, ["latitude", "longitude"]]
-            dataframe.loc[n, dados] = geofast.distance(h.latitude, h.longitude,
-                                                       stops.latitude, stops.longitude).min()
+            dataframe.loc[n, data_file] = geofast.distance(h.latitude, h.longitude,
+                                                           stops.latitude, stops.longitude).min()
 
-    # Calcula os pontos em uma localidade de 1km
+    # Calculate points within 1km area
     data = ['culture.csv', 'crime.csv', 'restaurant.csv']
 
-    for dados in data:
-        region = pd.read_csv(os.path.join(settings.dir_sp, dados))
-        dataframe[dados] = np.nan
+    for data_file in data:
+        region = pd.read_csv(os.path.join(settings.dir_sp, data_file))
+        dataframe[data_file] = np.nan
         for n in rows:
             h = dataframe.loc[:, ["longitude", "latitude"]].to_numpy()  # Convert to NumPy array
             h500 = geofast.distance(region.latitude.to_numpy(), region.longitude.to_numpy(), h[:, 0], h[:, 1]) 
-            dataframe.loc[n, dados] = sum(h500 < 700)
+            dataframe.loc[n, data_file] = sum(h500 < 700)
 
     dataframe['crime.csv'] = dataframe['crime.csv'] * 100 / 12377
     return dataframe
@@ -74,30 +74,30 @@ def distance(dataframe):
 
 df1 = distance(df)
 
-# Variáveis
-model = st.sidebar.selectbox('Tipo', list(['Apartamento', 'Casa']))
-floor_area = st.sidebar.number_input("Area Total (m²)", 20, value=60)
-bedrooms = st.sidebar.slider("Quartos", 0, 10, 1)
-bathrooms = st.sidebar.slider("Banheiros", 0, 10, 1)
-vacancies = st.sidebar.slider("Estacionamento", 0, 10, 1)
-suite = st.sidebar.selectbox('Suíte', list(['No', 'Yes']))
+# Variables
+model = st.sidebar.selectbox('Type', list(['Apartment', 'House']))
+floor_area = st.sidebar.number_input("Total Area (m²)", 20, value=60)
+bedrooms = st.sidebar.slider("Bedrooms", 0, 10, 1)
+bathrooms = st.sidebar.slider("Bathrooms", 0, 10, 1)
+vacancies = st.sidebar.slider("Parking", 0, 10, 1)
+suite = st.sidebar.selectbox('Suite', list(['No', 'Yes']))
 duplex = st.sidebar.selectbox('Duplex', list(['No', 'Yes']))
-office = st.sidebar.selectbox('Escritório', list(['No', 'Yes']))
-furnished = st.sidebar.selectbox('Mobiliado', list(['No', 'Yes']))
-lounge = st.sidebar.selectbox('Salão de Festas', list(['No', 'Yes']))
-balcony = st.sidebar.selectbox('Varanda', list(['No', 'Yes']))
-renovated = st.sidebar.selectbox('Reformado', list(['No', 'Yes']))
-townhouse = st.sidebar.selectbox('Sobrado', list(['No', 'Yes']))
-air = st.sidebar.selectbox('Ar Condicionado', list(['No', 'Yes']))
-barbecue = st.sidebar.selectbox('Churrasqueira', list(['No', 'Yes']))
-btn_predict = st.sidebar.button("CALCULAR ALUGUEL")
+office = st.sidebar.selectbox('Office', list(['No', 'Yes']))
+furnished = st.sidebar.selectbox('Furnished', list(['No', 'Yes']))
+lounge = st.sidebar.selectbox('Party Room', list(['No', 'Yes']))
+balcony = st.sidebar.selectbox('Balcony', list(['No', 'Yes']))
+renovated = st.sidebar.selectbox('Renovated', list(['No', 'Yes']))
+townhouse = st.sidebar.selectbox('Townhouse', list(['No', 'Yes']))
+air = st.sidebar.selectbox('Air Conditioning', list(['No', 'Yes']))
+barbecue = st.sidebar.selectbox('Barbecue', list(['No', 'Yes']))
+btn_predict = st.sidebar.button("CALCULATE RENT")
 
 if btn_predict:
 
-    head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bedrooms, 'Bedrooms': bathrooms,
-             'Vacancies': vacancies, 'suíte': suite, 'mobiliado': furnished, 'churrasqueira': barbecue,
-             'salão': lounge, 'varanda': balcony, 'duplex': duplex, 'reformado': renovated, 'sobrado': townhouse,
-             'condicionado': air, 'escritorio': office}]
+    head = [{'Type': model, 'Total Area': floor_area, 'Bathrooms': bathrooms, 'Bedrooms': bedrooms,
+             'Vacancies': vacancies, 'suite': suite, 'furnished': furnished, 'barbecue': barbecue,
+             'lounge': lounge, 'balcony': balcony, 'duplex': duplex, 'renovated': renovated, 'townhouse': townhouse,
+             'air': air, 'office': office}]
 
     df2 = pd.DataFrame(head)
     df = pd.concat([df1, df2], axis=1, join="inner")
@@ -107,12 +107,12 @@ if btn_predict:
 
         dataframe = dataframe.rename(columns={'Type': 'Type_house', 'dist_bus.csv': 'dist_bus',
                                               'dist_subway.csv': 'dist_subway', 'dist_school.csv': 'dist_school',
-                                              'culture.csv': 'ncult', 'crime.csv': 'crime%', 'restaurant.csv': 'food'})
+                                              'culture.csv': 'culture', 'crime.csv': 'crime%', 'restaurant.csv': 'food'})
 
         dataframe = dataframe[['Total Area', 'Bathrooms', 'Bedrooms', 'Vacancies', 'dist_subway', 'dist_bus',
-                               'dist_school', 'ncult', 'food', 'crime%', 'latitude', 'longitude', 'suíte', 'mobiliado',
-                               'churrasqueira', 'salão', 'varanda', 'duplex', 'reformado', 'sobrado', 'condicionado',
-                               'escritorio', 'Type_house']]
+                               'dist_school', 'culture', 'food', 'crime%', 'latitude', 'longitude', 'suite', 'furnished',
+                               'barbecue', 'lounge', 'balcony', 'duplex', 'renovated', 'townhouse', 'air',
+                               'office', 'Type_house']]
 
         return dataframe
 
@@ -123,8 +123,8 @@ if btn_predict:
     for i in range(12, 22):
         df.iloc[:, i] = df.iloc[:, i].map({'Yes': 1, 'No': 0})
 
-    df['Type_house'] = df['Type_house'].map({'Casa': 1, 'Apartamento': 0})
+    df['Type_house'] = df['Type_house'].map({'House': 1, 'Apartment': 0})
 
     # Predict
     prediction = load_model()[0]
-    st.header('O Valor do Aluguel é: **R$%s**' % ("{:,}".format(int(prediction))))
+    st.header('The Rent Value is: **$%s**' % ("{:,}".format(int(prediction))))
