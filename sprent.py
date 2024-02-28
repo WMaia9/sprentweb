@@ -127,4 +127,4 @@ if btn_predict:
 
     # Predict
     prediction = load_model()[0]
-    st.header('The Rent Value is: **$%s**' % ("{:,}".format(int(prediction))))
+    st.header('The Rent Value is: **R$%s**' % ("{:,}".format(int(prediction))))
